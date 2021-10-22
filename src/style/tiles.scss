@@ -1,0 +1,279 @@
+$tile-amount: 10;
+
+:root {
+    --tile-size: 40px;
+}
+
+.game {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: #222;
+
+    &__view {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        overflow: hidden;
+        background-color: #555;
+
+        &__map {
+            width: var(--tile-size);
+            height: var(--tile-size);
+            position: relative;
+            top: 50%;
+            transform: translateY(-52%);
+            margin: auto;
+            &__container {
+                display: grid;
+                width: calc(#{var(--tile-size)} * #{$tile-amount});
+                grid-template-columns: repeat(#{$tile-amount}, minmax(#{var(--tile-size)}, 1fr));
+                grid-template-rows: repeat(16, auto);
+                position: absolute;
+                outline: 1px solid #222;
+        
+                &__tile {
+                    width: var(--tile-size);
+                    height: var(--tile-size);
+                    background-size: cover;
+                    position: relative;
+                    overflow: hidden;
+    
+                    &:focus {
+                        outline: none;
+                    }
+
+                    &.spawnpoint {
+                        z-index: 50;
+                        outline: 1px solid purple;
+                        &:before {
+                            content: 'spawn';
+                            text-transform: uppercase;
+                            font-size: 10px;
+                            color: #FFF;
+                            text-align: center;
+                            width: 100%;
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                        }
+                        &:after {
+                            content: '';
+                            position: absolute;
+                            background-color: purple;
+                            opacity: 0.3;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                        }  
+                    }
+    
+                        &:hover {
+                            z-index: 50;
+                            outline: 1px solid red;
+                            &:after {
+                                content: '';
+                                position: absolute;
+                                background-color: red;
+                                opacity: 0.3;
+                                left: 0;
+                                top: 0;
+                                width: 100%;
+                                height: 100%;
+                            }
+                        }
+                    
+                        &:focus {
+                            &:before {
+                                content: '';
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 33vw;
+                                background-color: rgba(0,0,0,0.1);
+                                transform: scale(1.5);
+                                animation: tileTap 0.3s forwards;
+                            }
+                        }
+                
+    
+                    &.grass {
+                        background-image: url("../assets/grass.png");
+                    }
+        
+                    &.wall {
+                        background-image: url("../assets/wall.png");
+                    }
+        
+                    &.wall-bottom {
+                        background-image: url("../assets/wall_bottom.png");
+                    }
+
+                    &.stair-left {
+                        background-image: url("../assets/stair_left.png");
+                    }
+
+                    &.stair-right {
+                        background-image: url("../assets/stair_right.png");
+                    }
+
+                    &.water {
+                        background-image: url("../assets/water.png");
+                    }
+        
+                }
+            }
+        }
+
+        &__overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            color: #FFF;
+            user-select: none;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+
+            &__stats {
+                margin: 1rem;
+                width: 25%;
+                display: inline-block;
+
+                h1 {
+                    font-weight: 100;
+                }
+            }
+
+            .game-profile {
+                position: absolute;
+                right: 0;
+                top: 0;
+                margin: 1rem;
+
+                &__health {
+                    li {
+                        display: inline-block;
+                        margin: 0 2.5px;
+
+                        .heart {
+                            width: 16px;
+                            height: 16px;
+                            background-image: url("../assets/heart.png");
+                            background-size: cover;
+                        }
+                    }
+                }
+
+            }
+
+            .game-chat {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                margin: 1rem;
+                background-color: rgba(0,0,0,0.4);
+                min-width: 25%;
+                height: 40%;
+            }
+        }
+    
+        &__character {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 70;
+            width: var(--tile-size);
+            height: var(--tile-size);
+            background: url("../assets/character_standby_down.png") left center;
+            background-size: cover;
+            pointer-events: none;
+            text-align: center;
+
+            &[data-state="left"] {
+
+                background: url("../assets/character_standby_down.png");
+                background-size: cover;
+
+                &.walking {
+                    background: url("../assets/character_walking_sideways.png") left center;
+                    background-size: cover;
+                    animation: walking 0.5s steps(3) infinite;
+                }
+
+            }
+
+            &[data-state="right"] {
+
+                background: url("../assets/character_standby_down.png");
+                background-size: cover;
+
+                &.walking {
+                    background: url("../assets/character_walking_sideways.png") left center;
+                    background-size: cover;
+                    animation: walking 0.5s steps(3) infinite;
+                    transform: scaleX(-1);
+                }
+
+            }
+
+            &[data-state="bottom"] {
+
+                background: url("../assets/character_standby_down.png");
+                background-size: cover;
+
+                &.walking {
+                    background: url("../assets/character_walking_down.png") left center;
+                    background-size: cover;
+                    animation: walking 0.5s steps(3) infinite;   
+                }
+            }
+
+            &[data-state="top"] {
+
+                background: url("../assets/character_standby_up.png");
+                background-size: cover;
+
+                &.walking {
+                    background: url("../assets/character_walking_up.png") left center;
+                    background-size: cover;
+                    animation: walking 0.5s steps(3) infinite;
+                }
+
+            }
+
+            &[data-state="right"].walking:before {
+                transform: scaleX(-1) !important;
+            }
+
+            &:before {
+                content: 'Dragonslayer64';
+                position: relative;
+                top: -25px;
+                color: #FFF;
+                text-shadow: 1px 1px 2px #222;
+                display: block;
+            }
+        }
+    }
+}
+
+@keyframes walking {
+    100% { background-position: 225px }
+}
+
+@keyframes tileTap {
+    from { transform: scale(1.5) }
+    to { transform: scale(0) }
+}

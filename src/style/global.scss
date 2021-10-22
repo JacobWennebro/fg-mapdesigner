@@ -1,0 +1,26 @@
+@import '../../node_modules/codemirror/lib/codemirror.css';
+@import '../../node_modules/codemirror/theme/dracula.css';
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html,body {
+    margin: 0;
+    box-sizing: inherit;
+    background-color: #333;
+}
+
+.CodeMirror, .react-codemirror2 {
+    height: 100%;
+    width: 100%;
+}
+
+.app {
+
+    &__overlay {
+        position: absolute;
+        text-align: right;
+    }
+    
+}

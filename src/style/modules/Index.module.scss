@@ -1,0 +1,48 @@
+@import "../variables.scss";
+
+.App {
+  width: 100vw;
+  height: 100vh;
+}
+
+.Main {
+  display: grid;
+  grid-template-columns: 30vw auto;
+  font-family: $font;
+  width: 100%;
+  height: 100%;
+  
+  h1 {
+    color: #333;
+  }
+  
+  p {
+    color: #aaa;
+  }
+}
+
+.Editor {
+
+}
+
+.View {
+  position: relative;
+  image-rendering: pixelated;
+}
+
+.ViewOverlay {
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  height: auto;
+  text-align: right;
+  padding: 1rem;
+  user-select: none;
+  pointer-events: none;
+  button {
+    pointer-events: initial !important;
+  }
+  h1,h2,h3,h4,h5,h6,a,span,p {
+    opacity: 0.8;
+  }
+}
